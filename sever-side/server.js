@@ -11,16 +11,20 @@ const port = process.env.PORT || 5000;
 
 // Cấu hình CORS
 const allowedOrigins = [
-  'http://localhost:3000', 
-  process.env.FRONTEND_URL, 
-].filter(Boolean); 
+  'http://localhost:3000',
+  'http://localhost:5173', // Add common dev ports (e.g., Vite)
+  process.env.FRONTEND_URL,
+].filter(Boolean);
 
 app.use(cors({
   credentials: true,
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    console.log('Request Origin:', origin); // Log origin for debugging
+    // Allow requests with no origin (e.g., Postman, curl) or from allowed origins
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.onrender.com')) {
       callback(null, true);
     } else {
+      console.error('CORS Error: Origin not allowed:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -77,7 +81,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  
+
   if (!token) {
     return res.status(401).json({ error: 'Token required' });
   }
@@ -316,6 +320,7 @@ app.get('/generate-id', async (req, res) => {
   }
 });
 
+// Xử lý lỗi toàn cục
 app.use((err, req, res, next) => {
   console.error('Server error:', err);
   res.status(500).json({ error: 'Internal server error: ' + err.message });
