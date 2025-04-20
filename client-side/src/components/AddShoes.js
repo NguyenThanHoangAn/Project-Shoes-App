@@ -24,7 +24,7 @@ function AddShoes({ token, onAddSuccess }) {
       }
 
       try {
-        const response = await fetch(`http://localhost:5000/generate-id?type=${newShoe.type}`, {
+        const response = await fetch(`https://project-shoes-app.onrender.com/generate-id?type=${newShoe.type}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

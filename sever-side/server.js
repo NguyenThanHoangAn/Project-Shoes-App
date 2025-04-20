@@ -10,9 +10,20 @@ require('dotenv').config();
 const port = process.env.PORT || 5000;
 
 // Cấu hình CORS
+const allowedOrigins = [
+  'http://localhost:3000', 
+  process.env.FRONTEND_URL, 
+].filter(Boolean); 
+
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:3000',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
 }));
 app.use(express.json());
 app.use(cookieParser());
