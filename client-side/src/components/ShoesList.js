@@ -5,12 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ShoesList({ token }) {
   const [shoes, setShoes] = useState([]);
-  const [refresh, setRefresh] = useState(false);
   const [error, setError] = useState('');
   const [editShoe, setEditShoe] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(''); // Tìm kiếm
-  const [currentPage, setCurrentPage] = useState(1); // Phân trang
-  const shoesPerPage = 6; // Số lượng giày trên mỗi trang
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const shoesPerPage = 6;
 
   // Fetch danh sách giày
   const fetchShoes = async () => {
@@ -57,7 +56,7 @@ function ShoesList({ token }) {
 
   useEffect(() => {
     fetchShoes();
-  }, [refresh, token]);
+  }, [token]);
 
   // Callback khi cập nhật giày thành công
   const handleUpdateSuccess = (updatedShoe) => {
@@ -82,7 +81,7 @@ function ShoesList({ token }) {
 
     try {
       const response = await fetch(`http://localhost:5000/shoes/${shoeId}`, {
-        method: 'DELETE',
+        method85: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -100,7 +99,7 @@ function ShoesList({ token }) {
       const result = await response.json();
       if (response.ok) {
         alert(result.message);
-        setRefresh(!refresh); // Refresh danh sách
+        fetchShoes(); // Gọi lại API để cập nhật danh sách
       } else {
         throw new Error(result.error || 'Xóa không thành công');
       }
@@ -135,12 +134,6 @@ function ShoesList({ token }) {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button
-            className="btn btn-primary"
-            onClick={() => setRefresh(!refresh)}
-          >
-            Refresh
-          </button>
         </div>
       </div>
 
