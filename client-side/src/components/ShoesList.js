@@ -20,7 +20,7 @@ function ShoesList({ token }) {
 
     try {
       console.log('Fetching shoes with token:', token);
-      const response = await fetch('http://localhost:5000/shoes', {
+      const response = await fetch('https://project-shoes-app.onrender.com/shoes', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,

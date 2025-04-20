@@ -59,7 +59,7 @@ function AddShoes({ token, onAddSuccess }) {
   const handleAddShoe = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/shoes', {
+      const response = await fetch('https://project-shoes-app.onrender.com/shoes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

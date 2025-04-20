@@ -5,7 +5,7 @@ const DeleteShoes = async (shoeId, token, onSuccess) => {
   if (!confirmDelete) return;
 
   try {
-    const response = await fetch(`http://localhost:5000/shoes/${shoeId}`, {
+    const response = await fetch(`https://project-shoes-app.onrender.com/shoes/${shoeId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,

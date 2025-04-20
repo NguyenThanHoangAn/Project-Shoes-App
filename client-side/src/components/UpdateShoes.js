@@ -22,7 +22,7 @@ function UpdateShoes({ token, shoe, onUpdateSuccess, onCancel }) {
       }
 
       try {
-        const response = await fetch(`http://localhost:5000/generate-id?type=${editShoe.type}`, {
+        const response = await fetch(`https://project-shoes-app.onrender.com/generate-id?type=${editShoe.type}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -56,7 +56,7 @@ function UpdateShoes({ token, shoe, onUpdateSuccess, onCancel }) {
   const handleUpdateShoe = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/shoes/${shoe._id}`, {
+      const response = await fetch(`https://project-shoes-app.onrender.com/shoes/${shoe._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

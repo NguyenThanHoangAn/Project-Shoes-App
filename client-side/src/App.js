@@ -14,7 +14,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:5000/logout', {
+      const response = await fetch('https://project-shoes-app.onrender.com/logout', {
         method: 'POST',
         credentials: 'include',
       });
