@@ -11,8 +11,7 @@ const port = process.env.PORT || 5000;
 
 // Cấu hình CORS
 const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:5173', // Add common dev ports (e.g., Vite)
+  'https://project-shoes-app-five.vercel.app',
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 
