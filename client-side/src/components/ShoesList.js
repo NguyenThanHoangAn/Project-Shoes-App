@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import AddShoes from './AddShoes';
 import UpdateShoes from './UpdateShoes';
+import DeleteShoes from './DeleteShoes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ShoesList({ token }) {
@@ -72,41 +72,6 @@ function ShoesList({ token }) {
   // Hủy chỉnh sửa
   const handleCancelEdit = () => {
     setEditShoe(null);
-  };
-
-  // Xóa giày
-  const handleDeleteShoe = async (shoeId) => {
-    const confirmDelete = window.confirm('Bạn có chắc chắn muốn xóa đôi giày này không?');
-    if (!confirmDelete) return;
-
-    try {
-      const response = await fetch(`http://localhost:5000/shoes/${shoeId}`, {
-        method85: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      });
-
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        const text = await response.text();
-        console.error('Non-JSON response:', text);
-        throw new Error('Server returned non-JSON response');
-      }
-
-      const result = await response.json();
-      if (response.ok) {
-        alert(result.message);
-        fetchShoes(); // Gọi lại API để cập nhật danh sách
-      } else {
-        throw new Error(result.error || 'Xóa không thành công');
-      }
-    } catch (error) {
-      console.error('Error deleting shoe:', error.message);
-      alert(`Đã xảy ra lỗi khi xóa giày: ${error.message}`);
-    }
   };
 
   // Lọc và tìm kiếm giày
@@ -199,7 +164,7 @@ function ShoesList({ token }) {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDeleteShoe(shoe._id)}
+                    onClick={() => DeleteShoes(shoe._id, token, fetchShoes)}
                     className="btn btn-outline-danger btn-sm"
                   >
                     Delete
